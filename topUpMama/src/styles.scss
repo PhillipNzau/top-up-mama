@@ -55,7 +55,7 @@ input:focus {
 
 .entry-container {
   width: 30rem;
-  height: 30rem;
+  height: 35rem;
   padding: 2rem;
   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
   border-radius: 5px;
@@ -83,6 +83,14 @@ input:focus {
   padding: 1rem;
   border-radius: 0.5rem;
 }
+
+.entry--show-hide-password__container {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding-right: 1rem;
+}
+
 .entry-container__form__button {
   background-color: #ef592a;
   padding: 1rem;
