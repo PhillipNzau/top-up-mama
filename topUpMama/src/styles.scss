@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@font-face {
+  font-family: "topMamaBold";
+  src: local("topMama"), url("assets/fonts/G8321-Bold.ttf");
+}
+
+@font-face {
+  font-family: "topMamaLight";
+  src: local("topMama"), url("assets/fonts/G8321-Light.ttf");
+}
+
+@font-face {
+  font-family: "topMama";
+  src: local("topMama"), url("assets/fonts/G8321-Regular.ttf");
+}
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "topMama", sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #777;
+  padding: 3rem;
+  box-sizing: border-box;
+}
