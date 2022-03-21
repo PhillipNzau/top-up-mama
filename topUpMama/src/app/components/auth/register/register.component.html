@@ -1,1 +1,37 @@
-<p>register works!</p>
+<section class="entry-section">
+  <div class="entry-container">
+    <div class="entry-container__logo">
+      <img src="../../../assets/img/logo.png" alt="fetching logo" />
+    </div>
+
+    <form action="entry-container__form" class="row">
+      <div class="col-lg-12 mb-3">
+        <label for="userEmail" class="">Email</label>
+        <input
+          type="email"
+          class="form-control entry-container__form__input"
+          id="userEmail"
+          placeholder="Email"
+        />
+      </div>
+
+      <div class="col-lg-12 mb-3">
+        <label for="userPassword" class="">Password</label>
+        <input
+          type="password"
+          class="form-control entry-container__form__input"
+          id="userPassword"
+          placeholder="Password"
+        />
+      </div>
+
+      <div class="col-lg-12 mb-3 mt-4">
+        <button class="btn entry-container__form__button">Sign up</button>
+      </div>
+
+      <div class="col-lg-12 mb-3">
+        <h6 class="fw-bold" routerLink="" routerLinkActive="active">Login</h6>
+      </div>
+    </form>
+  </div>
+</section>
