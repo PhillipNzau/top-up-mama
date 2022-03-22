@@ -11,7 +11,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   // Create the login form
   loginForm = this.fb.group({
-    email: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,100}$')]]
   });
 
@@ -33,17 +33,15 @@ export class LoginComponent implements OnInit {
 
   loginUserSubmit() {
     this.submitted = true;
-
-
-
   }
 
   // check form validity
-  isValid(fieldName: any): boolean {
-    return (
-      this.loginForm.controls[fieldName].invalid &&
-      (this.loginForm.controls[fieldName].dirty ||
-        this.loginForm.controls[fieldName].touched)
-    );
+  get email() {
+    return this.loginForm.get('email')
   }
+
+  get password() {
+    return this.loginForm.get('password')
+  }
+
 }

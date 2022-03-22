@@ -1,7 +1,7 @@
 <section class="entry-section">
   <div class="entry-container">
     <div class="entry-container__logo">
-      <img src="assets/img/logo.png" alt="fetching logo" />
+      <img src="assets/img/logo.png" alt="fetching logo"/>
     </div>
 
     <form action="" class="row entry-container__form" [formGroup]="loginForm"
@@ -14,10 +14,14 @@
           id="userEmail"
           formControlName="email"
           placeholder="Email"
-        />
+          [ngClass]="{'is-invalid': email && email.invalid && email.touched}"
 
+        />
         <!-- Validation-->
+        <div *ngIf="email && email.invalid && email.touched" class="entry--error__container">
+          <span class="alert-danger">Email is required, Enter Valid Email</span>
         </div>
+      </div>
 
       <div class="col-lg-12 mb-3">
         <label for="password" class="">Password</label>
@@ -27,10 +31,18 @@
           id="password"
           formControlName="password"
           placeholder="Password"
-          required
+          [ngClass]="{'is-invalid': password && password.invalid && password.touched}"
+
         />
 
-
+        <!-- Validation-->
+        <div *ngIf="password && password.invalid && password.touched" class="entry--error__container">
+          <span class="alert-danger">
+          Password is required, <br>
+          Enter Valid Password (Should be:minimum length (8);
+          a mixture of alphanumeric and a special character)
+        </span>
+        </div>
 
         <div class="entry--show-hide-password__container">
           <div
