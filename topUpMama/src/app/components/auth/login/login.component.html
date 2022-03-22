@@ -1,28 +1,36 @@
 <section class="entry-section">
   <div class="entry-container">
     <div class="entry-container__logo">
-      <img src="../../../assets/img/logo.png" alt="fetching logo" />
+      <img src="assets/img/logo.png" alt="fetching logo" />
     </div>
 
-    <form action="entry-container__form" class="row">
+    <form action="" class="row entry-container__form" [formGroup]="loginForm"
+          (ngSubmit)="loginUserSubmit()">
       <div class="col-lg-12 mb-3">
         <label for="userEmail" class="">Email</label>
         <input
           type="email"
           class="form-control entry-container__form__input"
           id="userEmail"
+          formControlName="email"
           placeholder="Email"
         />
-      </div>
+
+        <!-- Validation-->
+        </div>
 
       <div class="col-lg-12 mb-3">
-        <label for="userPassword" class="">Password</label>
+        <label for="password" class="">Password</label>
         <input
           [type]="isShowPassword ? 'text' : 'password'"
           class="form-control entry-container__form__input mb-3"
-          id="userPassword"
+          id="password"
+          formControlName="password"
           placeholder="Password"
+          required
         />
+
+
 
         <div class="entry--show-hide-password__container">
           <div
@@ -80,11 +88,11 @@
       </div>
 
       <div class="col-lg-12 mb-3 mt-4">
-        <button class="btn entry-container__form__button">Log in</button>
+        <button class="btn entry-container__form__button" [disabled]="!loginForm.valid">Log in</button>
       </div>
 
       <div class="col-lg-12 mb-3">
-        <h6 class="fw-bold" routerLink="/register" routerLinkActive="active">
+        <h6 class="fw-bold entry-text__option" routerLink="/register" routerLinkActive="active">
           Register
         </h6>
       </div>

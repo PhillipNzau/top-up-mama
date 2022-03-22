@@ -34,14 +34,11 @@ body {
   box-sizing: border-box;
 }
 
-textarea:focus,
-input:focus {
-  outline: none;
-}
+textarea:focus, input:focus { outline: none !important; box-shadow: none!important;}
 
 // Shared login and register css
 .entry-section {
-  background-image: url("~src/assets/img/backgroundImg.webp");
+  background-image: url("~src/assets/img/backgroundImg.jpg");
   background-size: cover;
   background-position: top;
   position: relative;
@@ -77,7 +74,15 @@ input:focus {
     margin: -20px;
   }
 }
-
+.entry-container__logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    height: 5rem;
+    width: 5rem;
+  }
+}
 .entry-container__form__input {
   height: 4rem;
   padding: 1rem;
@@ -98,14 +103,8 @@ input:focus {
   font-family: "topMamaBold", sans-serif;
   color: White;
 }
-
-.entry-container__logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  img {
-    height: 5rem;
-    width: 5rem;
-  }
+.entry-text__option {
+  &:hover {cursor: pointer}
 }
+
 // End of shared entry styles
