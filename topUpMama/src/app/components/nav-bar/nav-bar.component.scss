@@ -4,9 +4,16 @@
   justify-content: space-between;
   height: 5rem;
   padding: 1rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
+
+  //Large screens - DESKTOP
+  //@media only screen and (min-width: 64.063em) {
+  //  padding-left: 30rem  ;
+  //  padding-right: 30rem  ;
+  //}
 }
 .navbar__logo__container {
+  cursor: pointer;
   img {
     height: 5rem;
     width: 5rem;
