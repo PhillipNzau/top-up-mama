@@ -1,10 +1,41 @@
 .user-section__container {height: 80vh;
   padding: 2rem;
 }
+
+.custom--add__button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10rem ;
+  //height: 4rem;
+  padding: 1rem;
+  border: .1rem solid #ef592a;
+  transition: 0.3s;
+  &:hover {
+    background-color: #ef592a;
+    color: white;
+  }
+
+  &--close {
+    border: .1rem solid red;
+    &:hover {
+      background-color: red;
+      color: white;
+    }
+  }
+
+  &--add {
+    border: .1rem solid #0b5f2e;
+    &:hover {
+      background-color: #0b5f2e;
+      color: white;
+    }
+  }
+}
+
 .user--custom-table {
   padding: 2rem;
-  background-color: #ef592a;
-
+  background-color: #c5c1c0;
   border-collapse: collapse;
   margin: 25px 0;
   font-size: 0.9em;
@@ -15,7 +46,7 @@
 
 
 .user--custom-table thead tr {
-  background-color: #0b5f2e;
+  background-color: #2f1f1d;
   color: #ffffff;
   text-align: left;
 }
@@ -28,7 +59,8 @@
   border-bottom: 1px solid #dddddd;
   transition: 0.3s;
   &:hover {
-    background-color: #f1ab97;
+    background-color: #817e7e;
+    color: white;
   }
 }
 
@@ -36,11 +68,12 @@
   background-color: #f3f3f3;
   transition: 0.3s;
   &:hover {
-    background-color: #f1ab97;
+    background-color: #817e7e;
+    color: white;
   }
 }
 
 .user--custom-table tbody tr:last-of-type {
-  border-bottom: 2px solid #009879;
+  border-bottom: 2px solid #220e08;
 }
 
