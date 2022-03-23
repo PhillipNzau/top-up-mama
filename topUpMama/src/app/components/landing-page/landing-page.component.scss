@@ -1,0 +1,25 @@
+.landing-page__content__container {
+  //small screens Mobile
+  @media only screen and (max-width: 40em) {
+    display: block;
+    margin: auto;
+  }
+
+  //Large screens - DESKTOP
+  //@media only screen and (min-width: 64.063em) {
+  //  padding-left: 10rem  ;
+  //  padding-right: 10rem  ;
+  //  div{
+  //    margin-left: 20rem;
+  //  }
+  //}
+}
+.landing-page__img-container {
+
+  align-items: center;
+  width: 35rem;
+  img {
+    border-radius: .5rem;
+  }
+}
+

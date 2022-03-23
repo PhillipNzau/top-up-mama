@@ -1,5 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~bootstrap/dist/css/bootstrap.css";
 @font-face {
   font-family: "topMamaBold";
   src: local("topMama"), url("assets/fonts/G8321-Bold.ttf");
@@ -34,8 +33,18 @@ body {
   box-sizing: border-box;
 }
 
-textarea:focus, input:focus { outline: none !important; box-shadow: none!important;}
-
+textarea:focus, input:focus, button:focus { outline: none !important; box-shadow: none!important;}
+.title__text {
+  font-family: "topMamaBold", sans-serif;
+  font-size: 2rem;
+  color: #220e08;
+}
+.title__text--underline {
+  width: 5rem;
+  padding: 0.3rem ;
+  background-color: #220e08;
+  border: none;
+}
 // Shared login and register css
 .entry-section {
   background-image: url("~src/assets/img/backgroundImg.jpg");
@@ -112,5 +121,9 @@ textarea:focus, input:focus { outline: none !important; box-shadow: none!importa
 .entry-text__option {
   &:hover {cursor: pointer}
 }
-
 // End of shared entry styles
+
+.page__container {
+  height: 80vh;
+  padding: 2rem;
+}
