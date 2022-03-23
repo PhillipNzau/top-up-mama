@@ -10,7 +10,8 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { UsersPageComponent } from './components/users-page/users-page.component';
 import { MyAccountPageComponent } from './components/my-account-page/my-account-page.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {ErrorCatchingInterceptor} from "./_helpers/interceptors/error-catching.interceptor";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,13 @@ import {HttpClientModule} from "@angular/common/http";
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorCatchingInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
