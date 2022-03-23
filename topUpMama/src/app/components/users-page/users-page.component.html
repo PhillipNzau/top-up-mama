@@ -17,10 +17,10 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
+      <tr *ngFor="let user of allListedUsers">
+        <td>{{user.id}}</td>
+        <td>{{user.first_name}} {{user.last_name}}</td>
+        <td>{{user.email}}</td>
         <td style="cursor: pointer">
           <!--  Show drop down when user clicks action button-->
           <div class="dropdown">
