@@ -11,6 +11,7 @@ import { UsersPageComponent } from './components/users-page/users-page.component
 import { MyAccountPageComponent } from './components/my-account-page/my-account-page.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import {HttpClientModule} from "@angular/common/http";
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {HttpClientModule} from "@angular/common/http";
     LandingPageComponent,
     UsersPageComponent,
     MyAccountPageComponent,
-    NavBarComponent
+    NavBarComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
