@@ -16,6 +16,7 @@ export class UsersPageComponent implements OnInit {
   lastPage: number[] = [];
   pageNumbers: number[] = [];
   itemsListNumber: number[] = [];
+  errorMessage = '';
 
   constructor(
     private userService: UsersService) { }
@@ -26,10 +27,15 @@ export class UsersPageComponent implements OnInit {
 
   fetchAllUser(){
     // List users
-    this.userService.listUsers(1, 6).subscribe((users:any)=>{
-      // console.log(JSON.parse(users))
-      this.allListedUsers = users.data
-      console.log(this.allListedUsers)
+    this.userService.listUsers(1, 6).subscribe({
+      next: data => {
+        console.log(data)
+        this.allListedUsers = data.data
+      },
+      error: err => {
+        this.errorMessage = err.error.error
+        // console.log(this.errorMessage)
+      }
     })
   }
 
