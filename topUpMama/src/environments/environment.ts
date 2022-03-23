@@ -2,13 +2,18 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 const usersBaseUrl = 'https://reqres.in/api/';
+const geoCoderUrl = 'https://nominatim.openstreetmap.org/'
 export const environment = {
   production: false,
 
   // Create , Update, Delete, List Users
   userCreate: usersBaseUrl + 'users',
   userUpdateDelete: usersBaseUrl + 'users/',
-  userList: usersBaseUrl + 'users'
+  userList: usersBaseUrl + 'users',
+
+  // Get location
+  userLocation: geoCoderUrl + 'reverse'
+
 };
 
 /*

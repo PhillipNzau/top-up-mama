@@ -29,7 +29,6 @@ export class UsersPageComponent implements OnInit {
     this.userService.listUsers(1, 6).subscribe((users:any)=>{
       // console.log(JSON.parse(users))
       this.allListedUsers = users.data
-      console.log(this.allListedUsers)
     })
   }
 
