@@ -33,7 +33,7 @@ body {
   box-sizing: border-box;
 }
 
-textarea:focus, input:focus { outline: none !important; box-shadow: none!important;}
+textarea:focus, input:focus, button:focus { outline: none !important; box-shadow: none!important;}
 .title__text {
   font-family: "topMamaBold", sans-serif;
   font-size: 2rem;
@@ -122,3 +122,8 @@ textarea:focus, input:focus { outline: none !important; box-shadow: none!importa
   &:hover {cursor: pointer}
 }
 // End of shared entry styles
+
+.page__container {
+  height: 80vh;
+  padding: 2rem;
+}

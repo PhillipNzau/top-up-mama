@@ -1,9 +1,11 @@
-<section class="user-section__container">
+<section class="page__container">
+  <!-- Add user button-->
   <div class="add__button-container">
     <a class="custom--add__button btn"
        data-bs-toggle="modal" data-bs-target="#addUserModal">Add</a>
   </div>
 
+  <!-- List Users table-->
   <div>
     <table class="user--custom-table table">
       <thead>
@@ -20,35 +22,7 @@
         <td>Mark</td>
         <td>Otto</td>
         <td style="cursor: pointer">
-
-        <div class="dropdown">
-          <svg class="dropdown-toggle" id="parcelMenuItems" data-bs-toggle="dropdown" aria-expanded="false"
-               width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M16 17.5C16.8284 17.5 17.5 16.8284 17.5 16C17.5 15.1716 16.8284 14.5 16 14.5C15.1716 14.5 14.5 15.1716 14.5 16C14.5 16.8284 15.1716 17.5 16 17.5Z"
-              fill="black"/>
-            <path
-              d="M8 17.5C8.82843 17.5 9.5 16.8284 9.5 16C9.5 15.1716 8.82843 14.5 8 14.5C7.17157 14.5 6.5 15.1716 6.5 16C6.5 16.8284 7.17157 17.5 8 17.5Z"
-              fill="black"/>
-            <path
-              d="M24 17.5C24.8284 17.5 25.5 16.8284 25.5 16C25.5 15.1716 24.8284 14.5 24 14.5C23.1716 14.5 22.5 15.1716 22.5 16C22.5 16.8284 23.1716 17.5 24 17.5Z"
-              fill="black"/>
-          </svg>
-          <ul class="dropdown-menu shadow" aria-labelledby="parcelMenuItems">
-            <li><a class="dropdown-item" (click)="getUserId()">Edit</a>
-            </li>
-            <li><a class="dropdown-item">Delete</a></li>
-          </ul>
-        </div>
-      </td>
-      </tr>
-
-      <tr>
-        <th scope="row">2</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td style="cursor: pointer">
-
+          <!--  Show drop down when user clicks action button-->
           <div class="dropdown">
             <svg class="dropdown-toggle" id="parcelMenuItems" data-bs-toggle="dropdown" aria-expanded="false"
                  width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -63,39 +37,9 @@
                 fill="black"/>
             </svg>
             <ul class="dropdown-menu shadow" aria-labelledby="parcelMenuItems">
-              <li><a class="dropdown-item" (click)="getUserId()">View</a>
+              <li><a class="dropdown-item" (click)="getUserId()" data-bs-toggle="modal" data-bs-target="#editUserModal">Edit</a>
               </li>
-              <li><a class="dropdown-item">Edit</a></li>
-              <li><a class="dropdown-item">Deactivate</a></li>
-            </ul>
-          </div>
-        </td>
-      </tr>
-
-      <tr>
-        <th scope="row">3</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td style="cursor: pointer">
-
-          <div class="dropdown">
-            <svg class="dropdown-toggle" id="parcelMenuItems" data-bs-toggle="dropdown" aria-expanded="false"
-                 width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M16 17.5C16.8284 17.5 17.5 16.8284 17.5 16C17.5 15.1716 16.8284 14.5 16 14.5C15.1716 14.5 14.5 15.1716 14.5 16C14.5 16.8284 15.1716 17.5 16 17.5Z"
-                fill="black"/>
-              <path
-                d="M8 17.5C8.82843 17.5 9.5 16.8284 9.5 16C9.5 15.1716 8.82843 14.5 8 14.5C7.17157 14.5 6.5 15.1716 6.5 16C6.5 16.8284 7.17157 17.5 8 17.5Z"
-                fill="black"/>
-              <path
-                d="M24 17.5C24.8284 17.5 25.5 16.8284 25.5 16C25.5 15.1716 24.8284 14.5 24 14.5C23.1716 14.5 22.5 15.1716 22.5 16C22.5 16.8284 23.1716 17.5 24 17.5Z"
-                fill="black"/>
-            </svg>
-            <ul class="dropdown-menu shadow" aria-labelledby="parcelMenuItems">
-              <li><a class="dropdown-item" (click)="getUserId()">View</a>
-              </li>
-              <li><a class="dropdown-item">Edit</a></li>
-              <li><a class="dropdown-item">Deactivate</a></li>
+              <li><a class="dropdown-item" (click)="deleteUserId()" >Delete</a></li>
             </ul>
           </div>
         </td>
@@ -111,7 +55,7 @@
   <div class="modal-dialog modal-dialog-centered ">
     <div class="modal-content entry-container">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add New User</h5>
+        <h5 class="modal-title">Add New User</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body ">
@@ -127,8 +71,43 @@
           </div>
 
           <div class="col-12 mb-3 d-flex justify-content-between align-items-center">
-            <button type="submit" class="btn custom--add__button custom--add__button--add"> Add User</button>
-            <button type="button" class="btn custom--add__button custom--add__button--close" data-bs-dismiss="modal">Close</button>
+            <a type="submit" class="btn custom--add__button custom--add__button--add"> Add User</a>
+            <a class="btn custom--add__button custom--add__button--close" data-bs-dismiss="modal">
+              Close
+            </a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit user Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered ">
+    <div class="modal-content entry-container">
+      <div class="modal-header">
+        <h5 class="modal-title ">Update User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body ">
+        <form action="" class="row ">
+          <div class="col-12 mb-3">
+            <label for="editUserName" class="form-label">User Name</label>
+            <input type="text" class="form-control entry-container__form__input" id="editUserName">
+          </div>
+
+          <div class="col-12 mb-3">
+            <label for="editJobTitle" class="form-label">Job Title</label>
+            <input type="text" class="form-control entry-container__form__input" id="editJobTitle">
+          </div>
+
+          <div class="col-12 mb-3 d-flex justify-content-between align-items-center">
+            <a type="submit" class="btn custom--add__button custom--add__button--add"> Update User</a>
+            <a  class="btn custom--add__button custom--add__button--close" data-bs-dismiss="modal">
+              Close
+            </a>
           </div>
 
         </form>
