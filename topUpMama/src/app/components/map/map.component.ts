@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 // @ts-ignore
 import * as L from 'leaflet';
-import {LocationService} from "../../services/location/location.service";
+import {LocationService} from "../../_services/location/location.service";
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',

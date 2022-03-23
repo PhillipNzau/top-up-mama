@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
+import {AuthService} from "../../_services/auth/auth.service";
+import {TokenStorageService} from "../../_services/auth/token-storage.service";
 
 @Component({
   selector: 'app-login',
@@ -9,6 +11,10 @@ import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
 export class LoginComponent implements OnInit {
   isShowPassword = false;
   submitted = false;
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+
   // Create the login form
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -16,7 +22,9 @@ export class LoginComponent implements OnInit {
   });
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private tokenStorage: TokenStorageService
   ) {
   }
 
@@ -33,6 +41,24 @@ export class LoginComponent implements OnInit {
 
   loginUserSubmit() {
     this.submitted = true;
+    const { email, password } = this.loginForm.value;
+    this.authService.login(email, password).subscribe({
+      next: data => {
+        console.log(data);
+        this.tokenStorage.saveToken(data.accessToken);
+        this.tokenStorage.saveUser(data);
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.reloadPage();
+      },
+      error: err => {
+        this.errorMessage = err.error.error;
+        this.isLoginFailed = true;
+      }
+    });
+  }
+  reloadPage(): void {
+    window.location.href='';
   }
 
   // check form validity

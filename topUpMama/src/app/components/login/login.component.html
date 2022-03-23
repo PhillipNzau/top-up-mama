@@ -1,7 +1,7 @@
 <section class="entry-section">
   <div class="entry-container">
     <div class="entry-container__logo">
-      <img src="assets/img/logo.png" alt="fetching logo"/>
+      <img src="../../../assets/img/logo.png" alt="fetching logo"/>
     </div>
 
     <form action="" class="row entry-container__form" [formGroup]="loginForm"
@@ -108,6 +108,13 @@
           Register
         </h6>
       </div>
+      <div class="alert alert-warning text-center" *ngIf="isLoginFailed">
+        <p>Login failed!<br />{{ errorMessage }}</p>
+      </div>
     </form>
+
+    <div class="alert alert-success text-center" *ngIf="isLoggedIn">
+      <p>Your Login is successful!</p>
+    </div>
   </div>
 </section>
