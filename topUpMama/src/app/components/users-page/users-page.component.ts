@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UsersService} from "../../_services/users/users.service";
 
 @Component({
@@ -12,25 +12,32 @@ export class UsersPageComponent implements OnInit {
   currentPage: any;
   nextPage: any;
   prevPage: any;
-  totalPages: number[] = [];
-  lastPage: number[] = [];
-  pageNumbers: number[] = [];
+  totalPages: any;
+  lastPage: any;
+  defaultPerPage = 2
+  pageNumbers: any;
   itemsListNumber: number[] = [];
   errorMessage = '';
 
   constructor(
-    private userService: UsersService) { }
-
-  ngOnInit(): void {
-    this.fetchAllUser()
+    private userService: UsersService) {
   }
 
-  fetchAllUser(){
+  ngOnInit(): void {
+    this.fetchAllUser(1, this.defaultPerPage)
+  }
+
+  fetchAllUser(page: number, page_size: number) {
     // List users
-    this.userService.listUsers(1, 6).subscribe({
+    this.userService.listUsers(page, page_size).subscribe({
       next: data => {
-        console.log(data)
         this.allListedUsers = data.data
+        this.currentPage = data.page
+        this.totalPages = data.total_pages
+        this.itemsListNumber = data.per_page
+        this.pageNumbers = Array.from({length: this.totalPages}, (val, ind) => ind + 1)
+
+        console.log(this.currentPage)
       },
       error: err => {
         this.errorMessage = err.error.error
@@ -40,7 +47,6 @@ export class UsersPageComponent implements OnInit {
   }
 
 
-
   getUserId() {
 
   }
@@ -48,4 +54,21 @@ export class UsersPageComponent implements OnInit {
   deleteUserId() {
 
   }
+
+  toSelectedPage(page: any) {
+    this.fetchAllUser(page, this.defaultPerPage)
+
+  }
+
+  toPreviousPage() {
+    this.prevPage = this.currentPage - 1
+    this.fetchAllUser(this.prevPage, this.defaultPerPage)
+  }
+
+  toNextPage() {
+    this.nextPage = this.currentPage + 1
+    this.fetchAllUser(this.nextPage, this.defaultPerPage)
+  }
+
+
 }
