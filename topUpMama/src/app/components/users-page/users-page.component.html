@@ -72,19 +72,31 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body ">
-        <form action="" class="row ">
+        <form action="" class="row" [formGroup]="addUserForm" (ngSubmit)="addUserSubmit()">
           <div class="col-12 mb-3">
             <label for="userName" class="form-label">User Name</label>
-            <input type="text" class="form-control entry-container__form__input" id="userName">
+            <input [ngClass]="{'is-invalid': name && name.invalid && name.touched}"
+                   type="text" class="form-control entry-container__form__input" id="userName" formControlName="name">
+
+            <!-- Display validation error-->
+            <div *ngIf="name && name.invalid && name.touched">
+              <small class="text-danger">User name is Required</small>
+            </div>
           </div>
 
           <div class="col-12 mb-3">
             <label for="jobTitle" class="form-label">Job Title</label>
-            <input type="text" class="form-control entry-container__form__input" id="jobTitle">
+            <input [ngClass]="{'is-invalid': job && job.invalid && job.touched}"
+                   type="text" class="form-control entry-container__form__input" id="jobTitle" formControlName="job">
+
+            <!-- Display validation error-->
+            <div *ngIf="job && job.invalid && job.touched">
+              <small class="text-danger">Job Title is Required</small>
+            </div>
           </div>
 
           <div class="col-12 mb-3 d-flex justify-content-between align-items-center">
-            <a type="submit" class="btn custom--add__button custom--add__button--add"> Add User</a>
+            <button type="submit" class="btn custom--add__button custom--add__button--add" [disabled]="!addUserForm.valid"> Add User </button>
             <a class="btn custom--add__button custom--add__button--close" data-bs-dismiss="modal">
               Close
             </a>

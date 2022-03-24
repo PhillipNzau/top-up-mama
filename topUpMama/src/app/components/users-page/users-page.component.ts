@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UsersService} from "../../_services/users/users.service";
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-users-page',
@@ -18,8 +19,16 @@ export class UsersPageComponent implements OnInit {
   pageNumbers: any;
   itemsListNumber: number[] = [];
   errorMessage = '';
+  successMsg= ''
+
+  //Create user form
+  addUserForm = this.fb.group({
+    name:['', [Validators.required]],
+    job:['', [Validators.required]]
+  })
 
   constructor(
+    private fb: FormBuilder,
     private userService: UsersService) {
   }
 
@@ -36,8 +45,6 @@ export class UsersPageComponent implements OnInit {
         this.totalPages = data.total_pages
         this.itemsListNumber = data.per_page
         this.pageNumbers = Array.from({length: this.totalPages}, (val, ind) => ind + 1)
-
-        console.log(this.currentPage)
       },
       error: err => {
         this.errorMessage = err.error.error
@@ -70,5 +77,25 @@ export class UsersPageComponent implements OnInit {
     this.fetchAllUser(this.nextPage, this.defaultPerPage)
   }
 
+  // check form validity
+  get name() {
+    return this.addUserForm.get('name')
+  }
+  get job() {
+    return this.addUserForm.get('job')
+  }
 
+  // Create user function
+  addUserSubmit() {
+    this.userService.createUser(this.addUserForm.value).subscribe({
+      next: (data: any) => {
+        console.log(data)
+      },
+      error: (err: { error: { error: string; }; }) => {
+        // this.errorMessage = err.error.error
+        console.log(err)
+      }
+    })
+
+  }
 }

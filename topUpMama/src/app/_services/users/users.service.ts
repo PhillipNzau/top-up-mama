@@ -32,5 +32,13 @@ export class UsersService {
     return this.http.get(this.userUrl + '?' + params, this.getHeaders())
   }
 
+  ///////////////////////////-- create Users---////////////////
+  createUser(userData:any): any{
+    return this.http.post(this.userUrl, userData, this.getHeaders())
+  }
+
+
+
+
 
 }
