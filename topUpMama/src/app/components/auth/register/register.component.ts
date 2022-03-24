@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
+import {AuthService} from "../../../_services/auth/auth.service";
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,7 @@ export class RegisterComponent implements OnInit {
     password: ['', [Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,100}$')]]
   });
 
-  constructor(private fb: FormBuilder
+  constructor(private fb: FormBuilder, private loginService: AuthService
   ) {
   }
 
@@ -38,6 +39,16 @@ export class RegisterComponent implements OnInit {
   }
 
   registerUserSubmit() {
+    this.loginService.register(this.registerForm.value).subscribe({
+      next: (registerRes:any) =>{
+        // console.log('Register res success: ', registerRes)
+      },
+      error: (err:any) =>{
+        console.log('Register res: ',err)
+
+
+      }
+    })
 
   }
 }

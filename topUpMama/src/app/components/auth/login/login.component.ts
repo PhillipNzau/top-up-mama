@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
+import {AuthService} from "../../../_services/auth/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   });
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private loginService: AuthService
   ) {
   }
 
@@ -33,6 +35,17 @@ export class LoginComponent implements OnInit {
 
   loginUserSubmit() {
     this.submitted = true;
+    this.loginService.login(this.loginForm.value).subscribe({
+      next: (loginRes:any) =>{
+        // console.log('Login res success: ',loginRes)
+      },
+      error: (err:any) =>{
+        console.log('Login res: ',err)
+
+
+      }
+    })
+
   }
 
   // check form validity
