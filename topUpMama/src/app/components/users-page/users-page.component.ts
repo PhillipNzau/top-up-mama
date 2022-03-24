@@ -14,7 +14,7 @@ export class UsersPageComponent implements OnInit {
   prevPage: any;
   totalPages: any;
   lastPage: any;
-  defaultPerPage = 2
+  defaultPerPage = 6
   pageNumbers: any;
   itemsListNumber: number[] = [];
   errorMessage = '';
