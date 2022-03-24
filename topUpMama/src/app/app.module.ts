@@ -12,6 +12,8 @@ import { MyAccountPageComponent } from './components/my-account-page/my-account-
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ErrorCatchingInterceptor} from "./_helpers/interceptors/error-catching.interceptor";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import {ErrorCatchingInterceptor} from "./_helpers/interceptors/error-catching.i
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     {

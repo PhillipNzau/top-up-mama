@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UsersService} from "../../_services/users/users.service";
 import {FormBuilder, Validators} from "@angular/forms";
+import {NotificationService} from "../../_services/notifications/notification.service";
+import {LoadingHandler} from "../../_helpers/loading-handler";
 
 @Component({
   selector: 'app-users-page',
@@ -8,6 +10,9 @@ import {FormBuilder, Validators} from "@angular/forms";
   styleUrls: ['./users-page.component.scss']
 })
 export class UsersPageComponent implements OnInit {
+  // loading
+  loadingHandler = new LoadingHandler();
+
   allListedUsers: any
   itemsPerPage: any;
   currentPage: any;
@@ -29,7 +34,9 @@ export class UsersPageComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private userService: UsersService) {
+    private userService: UsersService,
+    private notifyService: NotificationService,
+    ) {
   }
 
   ngOnInit(): void {
@@ -37,9 +44,12 @@ export class UsersPageComponent implements OnInit {
   }
 
   fetchAllUser(page: number, page_size: number) {
+    this.loadingHandler.start();
     // List users
     this.userService.listUsers(page, page_size).subscribe({
       next: data => {
+        this.loadingHandler.finish();
+        this.notifyService.showSuccess("Users retrieved successfully", "TopUpMama")
         this.allListedUsers = data.data
         this.currentPage = data.page
         this.totalPages = data.total_pages
@@ -47,6 +57,7 @@ export class UsersPageComponent implements OnInit {
         this.pageNumbers = Array.from({length: this.totalPages}, (val, ind) => ind + 1)
       },
       error: err => {
+        this.notifyService.showError("Mmh.. Something went wrong.", "TopUpMama")
         this.errorMessage = err.error.error
         // console.log(this.errorMessage)
       }
@@ -87,11 +98,17 @@ export class UsersPageComponent implements OnInit {
 
   // Create user function
   addUserSubmit() {
+    this.loadingHandler.start();
     this.userService.createUser(this.addUserForm.value).subscribe({
       next: (data: any) => {
+        this.loadingHandler.finish();
+        this.notifyService.showSuccess("Users created successfully", "TopUpMama")
+        this.addUserForm.reset()
         console.log(data)
       },
       error: (err: { error: { error: string; }; }) => {
+        this.notifyService.showError("Mmh.. Something went wrong creating user.", "TopUpMama")
+
         // this.errorMessage = err.error.error
         console.log(err)
       }

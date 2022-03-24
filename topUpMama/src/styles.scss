@@ -127,3 +127,17 @@ textarea:focus, input:focus, button:focus { outline: none !important; box-shadow
   height: 80vh;
   padding: 2rem;
 }
+
+.hide {
+  display: none;
+}
+
+.custom--loader__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 50rem;
+    height: 50rem;
+  }
+}
