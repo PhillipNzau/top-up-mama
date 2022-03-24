@@ -37,6 +37,12 @@ export class UsersService {
     return this.http.post(this.userUrl, userData, this.getHeaders())
   }
 
+  ///////////////////////////-- delete Users---////////////////
+  deleteUser(id:number):any {
+    return this.http.delete(this.userUpdateUrl + id, this.getHeaders())
+  }
+
+
 
 
 

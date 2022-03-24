@@ -69,7 +69,22 @@ export class UsersPageComponent implements OnInit {
 
   }
 
-  deleteUserId() {
+  deleteUserId(id:number) {
+    this.loadingHandler.start();
+
+    this.userService.deleteUser(id).subscribe({
+      next: (data: any) => {
+        this.loadingHandler.finish();
+        this.notifyService.showSuccess("Users deleted successfully", "TopUpMama")
+        console.log(data)
+      },
+      error: (err: any)=>{
+        this.loadingHandler.finish();
+        this.notifyService.showError("Mmh.. Something went wrong deleting user.", "TopUpMama")
+        console.log(err)
+
+      }
+    })
 
   }
 
