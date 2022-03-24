@@ -14,6 +14,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ErrorCatchingInterceptor} from "./_helpers/interceptors/error-catching.interceptor";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {ToastrModule} from "ngx-toastr";
     LandingPageComponent,
     UsersPageComponent,
     MyAccountPageComponent,
-    NavBarComponent
+    NavBarComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,

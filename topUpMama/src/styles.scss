@@ -47,7 +47,7 @@ textarea:focus, input:focus, button:focus { outline: none !important; box-shadow
 }
 // Shared login and register css
 .entry-section {
-  background-image: url("~src/assets/img/backgroundImg.jpg");
+  //background-image: url("~src/assets/img/backgroundImg.jpg");
   background-size: cover;
   background-position: top;
   position: relative;
@@ -146,6 +146,13 @@ textarea:focus, input:focus, button:focus { outline: none !important; box-shadow
   margin-top: 1rem;
   p {
     font-family: "topMamaBold", sans-serif;
-    font-size: 1.5rem;
+    font-size: 4vw;
   }
+}
+
+.custom--map__container {
+  width: 100%;
+  height: 15rem;
+  background-color: #220e08;
+  margin-bottom: 1rem;
 }
