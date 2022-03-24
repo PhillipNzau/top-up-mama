@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
-import {AuthService} from "../../_services/auth/auth.service";
 
 @Component({
   selector: 'app-register',
@@ -11,9 +10,6 @@ export class RegisterComponent implements OnInit {
 
   isShowPassword = false;
   submitted = false;
-  isSuccessful = false;
-  isSignUpFailed = false;
-  errorMessage = '';
 
   // Create the login form
   registerForm = this.fb.group({
@@ -21,8 +17,7 @@ export class RegisterComponent implements OnInit {
     password: ['', [Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,100}$')]]
   });
 
-  constructor(private fb: FormBuilder,
-              private authService: AuthService
+  constructor(private fb: FormBuilder
   ) {
   }
 
@@ -43,23 +38,6 @@ export class RegisterComponent implements OnInit {
   }
 
   registerUserSubmit() {
-    this.submitted = true;
-    const {email, password} = this.registerForm.value;
-    this.authService.register(email, password).subscribe({
-      next: data => {
-        console.log(data);
-        this.isSuccessful = true;
-        this.isSignUpFailed = false;
-      },
-      error: err => {
-        console.log(err.error.error)
-        this.errorMessage = err.error.error;
-        this.isSignUpFailed = true;
-      }
-    });
-  }
 
-  reloadPage(): void {
-    window.location.href='/login';
   }
 }
