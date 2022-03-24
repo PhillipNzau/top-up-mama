@@ -3,6 +3,7 @@ import {BROWSER_STORAGE} from "../../_helpers/storage";
 import {UsersService} from "../../_services/users/users.service";
 import {FormBuilder, Validators} from "@angular/forms";
 import {LoadingHandler} from "../../_helpers/loading-handler";
+import {NotificationService} from "../../_services/notifications/notification.service";
 
 @Component({
   selector: 'app-my-account-page',
@@ -29,6 +30,7 @@ export class MyAccountPageComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UsersService,
+    private notifyService: NotificationService,
     @Inject(BROWSER_STORAGE) public storage: Storage
   ) { }
   getToken(): any {
@@ -44,6 +46,8 @@ export class MyAccountPageComponent implements OnInit {
     this.userService.viewUser(this.userId).subscribe({
       next: (loggedUser:any) =>{
         this.loadingHandler.finish();
+        this.notifyService.showSuccess("User retrieved successfully", "TopUpMama")
+
         this.loggedInUser = loggedUser.data
         this.avatar = this.loggedInUser.avatar
         this.firstName = this.loggedInUser.first_name
@@ -59,6 +63,8 @@ export class MyAccountPageComponent implements OnInit {
         console.log('Fetched Logged user success: ', loggedUser)
       },
       error: (err:any)=>{
+        this.notifyService.showError("Mmh.. Something went wrong.", "TopUpMama")
+
         console.log('Fetched Logged user err: ', err)
       }
     })
@@ -68,13 +74,23 @@ export class MyAccountPageComponent implements OnInit {
   updateLoggedUserSubmit() {
     this.userService.updateUser(this.updateLoggedUserForm.value, this.userId).subscribe({
       next: (data:any) =>{
+        this.notifyService.showSuccess("User updated successfully", "TopUpMama")
+
         console.log('Update logged in user: ', data)
 
       },
       error: (err:any)=>{
-
+        this.notifyService.showError("Mmh.. Something went wrong.", "TopUpMama")
       }
     })
+  }
 
+  // check form validity
+  isValid(fieldName: any, formName: any): boolean {
+    return (
+      formName.controls[fieldName].invalid &&
+      (formName.controls[fieldName].dirty ||
+        formName.controls[fieldName].touched)
+    );
   }
 }

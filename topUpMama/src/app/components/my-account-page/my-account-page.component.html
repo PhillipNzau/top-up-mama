@@ -20,16 +20,26 @@
         <form action="" class="row entry-container" [formGroup]="updateLoggedUserForm" (ngSubmit)="updateLoggedUserSubmit()">
           <div class="col-12 mb-3">
             <label for="userName" class="form-label">User Name</label>
-            <input
+            <input [ngClass]="{'is-invalid': isValid('name',updateLoggedUserForm)}"
               type="text" class="form-control entry-container__form__input"
               id="userName" formControlName="name">
+
+            <!-- Display validation error-->
+            <div *ngIf="isValid('name',updateLoggedUserForm)">
+              <small class="text-danger">User name is Required</small>
+            </div>
           </div>
 
           <div class="col-12 mb-3">
             <label for="jobTitle" class="form-label">Job Title</label>
-            <input
+            <input [ngClass]="{'is-invalid': isValid('job',updateLoggedUserForm)}"
               type="text" class="form-control entry-container__form__input"
               id="jobTitle"  formControlName="job">
+
+            <!-- Display validation error-->
+            <div *ngIf="isValid('job', updateLoggedUserForm)">
+              <small class="text-danger">Job Title is Required</small>
+            </div>
           </div>
 
           <div class="col-12 mb-3 d-flex justify-content-between align-items-center">
