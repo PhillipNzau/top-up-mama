@@ -24,12 +24,6 @@
   align-items: center;
   justify-content: space-between;
   div:nth-child(1) {
-    width: 3rem;
-    text-align: center;
-    margin: 3rem;
-    cursor: pointer;
-  }
-  div:nth-child(2) {
     border: .1rem solid #ef592a;
     width: 10rem;
     text-align: center;
@@ -46,5 +40,12 @@
       color: white;
       box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
     }
+  }
+
+  div:nth-child(2) {
+    width: 3rem;
+    text-align: center;
+    margin: 3rem;
+    cursor: pointer;
   }
 }
