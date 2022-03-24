@@ -64,17 +64,25 @@ export class AuthService {
     return this.storage.setItem('isLoggedIn', bool)
   }
 
+  saveExpTime(time:string):any {
+    return this.storage.setItem('tokenExp', time)
+  }
+
+  getExpTime():any {
+    return this.storage.getItem('tokenExp')
+  }
+
   removeSetStorage(): any {
     return this.storage.clear();
   }
 
   // Login user
   login(userData:any): Observable<any> {
-    // return this.http.post(this.loginUserUrl, userData)
     return this.http.post(this.loginUserUrl, userData).pipe(
       tap(),
       map((res:any)=> {
         this.notifyService.showSuccess("Users logged in successfully.", "TopUpMama")
+        this.saveExpTime('600000')
         this.loggedIn.next(true);
         this.router.navigate(['/']).then(r => {});
         const resLength = Object.keys(res).length
@@ -122,7 +130,6 @@ export class AuthService {
           this.saveUserLatLocation(this.lat)
           this.saveUserLngLocation(this.lng)
         });
-
 
         if(resLength > 0) {
           this.saveToken(res.token)
