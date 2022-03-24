@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {UsersService} from "../../services/users/users.service";
+import {UsersService} from "../../_services/users/users.service";
 
 @Component({
   selector: 'app-users-page',
@@ -29,7 +29,6 @@ export class UsersPageComponent implements OnInit {
     this.userService.listUsers(1, 6).subscribe((users:any)=>{
       // console.log(JSON.parse(users))
       this.allListedUsers = users.data
-      console.log(this.allListedUsers)
     })
   }
 

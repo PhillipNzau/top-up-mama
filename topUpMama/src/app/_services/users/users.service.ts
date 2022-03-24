@@ -29,7 +29,8 @@ export class UsersService {
     params = params.append('page', String(page))
     params = params.append('per_page', String(size));
 
-    return this.http.get(this.userUrl + '?' + params, this.getHeaders())
+    // this.getHeaders(),
+    return this.http.get(this.userUrl + '?' + params,  {responseType: 'text'})
   }
 
 
