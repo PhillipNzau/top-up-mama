@@ -42,6 +42,10 @@ export class UsersService {
     return this.http.delete(this.userUpdateUrl + id, this.getHeaders())
   }
 
+  viewUser(id:number):any {
+    return this.http.get(this.userUpdateUrl + id, this.getHeaders())
+  }
+
 
 
 

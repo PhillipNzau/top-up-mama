@@ -6,7 +6,7 @@
   </div>
 
   <!-- List Users table-->
-  <div  class="custom--loader__container" >
+  <div class="custom--loader__container">
     <img *ngIf="loadingHandler.isLoading$ | async" src="assets/img/loader3.gif" alt="loading">
   </div>
 
@@ -41,9 +41,10 @@
                 fill="black"/>
             </svg>
             <ul class="dropdown-menu shadow" aria-labelledby="parcelMenuItems">
-              <li><a class="dropdown-item" (click)="getUserId()" data-bs-toggle="modal" data-bs-target="#editUserModal">Edit</a>
+              <li><a class="dropdown-item" (click)="selectedUser(user.id)" data-bs-toggle="modal"
+                     data-bs-target="#editUserModal">Edit</a>
               </li>
-              <li><a class="dropdown-item" (click)="deleteUserId(user.id)" >Delete</a></li>
+              <li><a class="dropdown-item" (click)="deleteUserId(user.id)">Delete</a></li>
             </ul>
           </div>
         </td>
@@ -54,9 +55,10 @@
       <nav aria-label="Page navigation">
         <ul class="pagination justify-content-end custom--pagination__container">
           <li class="page-item" [ngClass]="{'disabled': (currentPage - 1) ===0}">
-            <a class="page-link"  (click)="toPreviousPage()">Previous</a>
+            <a class="page-link" (click)="toPreviousPage()">Previous</a>
           </li>
-          <li class="page-item" *ngFor="let page of pageNumbers" [ngClass]="{'active': currentPage===page}"><a class="page-link" (click)="toSelectedPage(page)">{{page}}</a></li>
+          <li class="page-item" *ngFor="let page of pageNumbers" [ngClass]="{'active': currentPage===page}"><a
+            class="page-link" (click)="toSelectedPage(page)">{{page}}</a></li>
           <li class="page-item" [ngClass]="{'disabled': (currentPage + 1) > totalPages}">
             <a class="page-link" (click)="toNextPage()">Next</a>
           </li>
@@ -79,28 +81,30 @@
         <form action="" class="row" [formGroup]="addUserForm" (ngSubmit)="addUserSubmit()">
           <div class="col-12 mb-3">
             <label for="userName" class="form-label">User Name</label>
-            <input [ngClass]="{'is-invalid': name && name.invalid && name.touched}"
+            <input [ngClass]="{'is-invalid': isValid('name',addUserForm)}"
                    type="text" class="form-control entry-container__form__input" id="userName" formControlName="name">
 
             <!-- Display validation error-->
-            <div *ngIf="name && name.invalid && name.touched">
+            <div *ngIf="isValid('name',addUserForm)">
               <small class="text-danger">User name is Required</small>
             </div>
           </div>
 
           <div class="col-12 mb-3">
             <label for="jobTitle" class="form-label">Job Title</label>
-            <input [ngClass]="{'is-invalid': job && job.invalid && job.touched}"
+            <input [ngClass]="{'is-invalid': isValid('name',addUserForm)}"
                    type="text" class="form-control entry-container__form__input" id="jobTitle" formControlName="job">
 
             <!-- Display validation error-->
-            <div *ngIf="job && job.invalid && job.touched">
+            <div *ngIf="isValid('job', addUserForm)">
               <small class="text-danger">Job Title is Required</small>
             </div>
           </div>
 
           <div class="col-12 mb-3 d-flex justify-content-between align-items-center">
-            <button  data-bs-dismiss="modal" type="submit" class="btn custom--add__button custom--add__button--add" [disabled]="!addUserForm.valid"> Add User </button>
+            <button data-bs-dismiss="modal" type="submit" class="btn custom--add__button custom--add__button--add"
+                    [disabled]="!addUserForm.valid"> Add User
+            </button>
             <a class="btn custom--add__button custom--add__button--close" data-bs-dismiss="modal">
               Close
             </a>
@@ -120,21 +124,36 @@
         <h5 class="modal-title ">Update User</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body ">
-        <form action="" class="row ">
+
+      <div class="modal-body " [ngClass]="{'hide': loadingHandler.isLoading$ | async}">
+        <form action="" class="row " [formGroup]="updateUserForm">
           <div class="col-12 mb-3">
             <label for="editUserName" class="form-label">User Name</label>
-            <input type="text" class="form-control entry-container__form__input" id="editUserName">
+            <input [ngClass]="{'is-invalid': isValid('name',updateUserForm)}"
+                   type="text" class="form-control entry-container__form__input" id="editUserName"
+                   formControlName="name">
+
+            <!-- Display validation error-->
+            <div *ngIf="isValid('name',updateUserForm)">
+              <small class="text-danger">User name is Required</small>
+            </div>
           </div>
 
           <div class="col-12 mb-3">
             <label for="editJobTitle" class="form-label">Job Title</label>
-            <input type="text" class="form-control entry-container__form__input" id="editJobTitle">
+            <input [ngClass]="{'is-invalid': isValid('job',updateUserForm)}"
+                   type="text" class="form-control entry-container__form__input" id="editJobTitle"
+                   formControlName="job">
+
+            <!-- Display validation error-->
+            <div *ngIf="isValid('job',updateUserForm)">
+              <small class="text-danger">Job Title is Required</small>
+            </div>
           </div>
 
           <div class="col-12 mb-3 d-flex justify-content-between align-items-center">
-            <a type="submit" class="btn custom--add__button custom--add__button--add"> Update User</a>
-            <a  class="btn custom--add__button custom--add__button--close" data-bs-dismiss="modal">
+            <button type="submit" class="btn custom--add__button custom--add__button--add" [disabled]="!updateUserForm.valid"> Update User</button>
+            <a class="btn custom--add__button custom--add__button--close" data-bs-dismiss="modal">
               Close
             </a>
           </div>

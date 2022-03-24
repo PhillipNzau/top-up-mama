@@ -26,9 +26,18 @@ export class UsersPageComponent implements OnInit {
   errorMessage = '';
   successMsg= ''
 
+  userName = '';
+  jobTitle = '';
+
   //Create user form
   addUserForm = this.fb.group({
     name:['', [Validators.required]],
+    job:['', [Validators.required]]
+  })
+
+  // Update user form
+  updateUserForm = this.fb.group({
+    name:['',[Validators.required]],
     job:['', [Validators.required]]
   })
 
@@ -43,6 +52,7 @@ export class UsersPageComponent implements OnInit {
     this.fetchAllUser(1, this.defaultPerPage)
   }
 
+  // List all users
   fetchAllUser(page: number, page_size: number) {
     this.loadingHandler.start();
     // List users
@@ -64,33 +74,9 @@ export class UsersPageComponent implements OnInit {
     })
   }
 
-
-  getUserId() {
-
-  }
-
-  deleteUserId(id:number) {
-    this.loadingHandler.start();
-
-    this.userService.deleteUser(id).subscribe({
-      next: (data: any) => {
-        this.loadingHandler.finish();
-        this.notifyService.showSuccess("Users deleted successfully", "TopUpMama")
-        console.log(data)
-      },
-      error: (err: any)=>{
-        this.loadingHandler.finish();
-        this.notifyService.showError("Mmh.. Something went wrong deleting user.", "TopUpMama")
-        console.log(err)
-
-      }
-    })
-
-  }
-
+  // Navigation from pagination
   toSelectedPage(page: any) {
     this.fetchAllUser(page, this.defaultPerPage)
-
   }
 
   toPreviousPage() {
@@ -101,14 +87,6 @@ export class UsersPageComponent implements OnInit {
   toNextPage() {
     this.nextPage = this.currentPage + 1
     this.fetchAllUser(this.nextPage, this.defaultPerPage)
-  }
-
-  // check form validity
-  get name() {
-    return this.addUserForm.get('name')
-  }
-  get job() {
-    return this.addUserForm.get('job')
   }
 
   // Create user function
@@ -128,6 +106,57 @@ export class UsersPageComponent implements OnInit {
         console.log(err)
       }
     })
+  }
 
+  // List selected user details
+  selectedUser(id:number) {
+    this.loadingHandler.start();
+
+    this.userService.viewUser(id).subscribe({
+      next: (data:any) => {
+        this.loadingHandler.finish();
+
+        console.log(data.data.first_name)
+        this.userName = data.data.first_name
+        this.jobTitle = data.data.last_name
+        console.log(this.jobTitle)
+
+        // set fetched user form details
+        let fetchedUser = {
+          name: this.userName,
+          job: this.jobTitle,
+        };
+        this.updateUserForm.setValue(fetchedUser);
+        console.log('The form ', this.updateUserForm.value)
+      },
+      error: (err:any) =>{
+
+      }
+    })
+  }
+
+  // Delete user by ID
+  deleteUserId(id:number) {
+    this.loadingHandler.start();
+
+    this.userService.deleteUser(id).subscribe({
+      next: (data: any) => {
+        this.loadingHandler.finish();
+        this.notifyService.showSuccess("Users deleted successfully", "TopUpMama")
+      },
+      error: (err: any)=>{
+        this.loadingHandler.finish();
+        this.notifyService.showError("Mmh.. Something went wrong deleting user.", "TopUpMama")
+      }
+    })
+  }
+
+  // check form validity
+  isValid(fieldName: any, formName: any): boolean {
+    return (
+      formName.controls[fieldName].invalid &&
+      (formName.controls[fieldName].dirty ||
+        formName.controls[fieldName].touched)
+    );
   }
 }
