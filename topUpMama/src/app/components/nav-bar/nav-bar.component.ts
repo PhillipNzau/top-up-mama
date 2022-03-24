@@ -9,7 +9,7 @@ import {BROWSER_STORAGE} from "../../_helpers/storage";
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
-  uid:any
+  token:any
   // @ts-ignore
   isLoggedIn$: Observable<boolean>;
   //
@@ -17,17 +17,19 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSavedUserLatLocation()
-    this.isLoggedIn$ = this.authService.isLoggedIn;
-  }
 
+    // this.isLoggedIn$ = true
+    // console.log(this.isLoggedIn$)
+    this.isLoggedIn$ = this.authService.isLoggedIn
+  }
 
   // get location from local storage
   getSavedUserLatLocation(): any {
-    this.uid = this.storage.getItem('uid')
+    this.token = this.storage.getItem('access_token')
   }
 
   onLogout(){
-    this.authService.logout();                      // {3}
+    this.authService.logout();
   }
 
 }

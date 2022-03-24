@@ -11,10 +11,9 @@ import {Router} from "@angular/router";
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedIn = new BehaviorSubject<boolean>(false); // {1}
-
+  private loggedIn = new BehaviorSubject<boolean>(localStorage.getItem("isLoggedIn") === "true");
   get isLoggedIn() {
-    return this.loggedIn.asObservable(); // {2}
+    return this.loggedIn.asObservable();
   }
   // locations
   lat:any
@@ -61,6 +60,10 @@ export class AuthService {
     return this.storage.setItem('lng', lng)
   }
 
+  saveIsLoggedIn(bool: string):any {
+    return this.storage.setItem('isLoggedIn', bool)
+  }
+
   removeSetStorage(): any {
     return this.storage.clear();
   }
@@ -88,6 +91,7 @@ export class AuthService {
 
         if(resLength > 0) {
           this.saveToken(res.token)
+          this.saveIsLoggedIn('true')
           // this.saveUserId(res.id)
         }
       }),
@@ -123,6 +127,7 @@ export class AuthService {
         if(resLength > 0) {
           this.saveToken(res.token)
           this.saveUserId(res.id)
+          this.saveIsLoggedIn('true')
         }
       }),
       catchError(async (error) => {
