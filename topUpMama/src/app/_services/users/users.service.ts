@@ -12,6 +12,9 @@ export class UsersService {
   userCreateUrl = environment.userCreate;
   userUpdateUrl = environment.userUpdateDelete
 
+  // Location service url
+  locationUrl = environment.userLocation
+
   constructor(public http: HttpClient) { }
 
   getHeaders(): any {
@@ -48,6 +51,15 @@ export class UsersService {
 
   updateUser(userdata:any, id:number):any {
     return this.http.patch(this.userUpdateUrl + id, userdata, this.getHeaders())
+  }
+
+  getUserLocation(lat: number, lon:number, format:string):Observable<any> {
+    let params = new HttpParams();
+    params = params.append('lat', String(lat))
+    params = params.append('lon', String(lon))
+    params = params.append('format', String(format));
+
+    return this.http.get(this.locationUrl + '?' + params, this.getHeaders())
   }
 
 

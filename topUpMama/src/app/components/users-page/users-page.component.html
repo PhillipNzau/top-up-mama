@@ -5,6 +5,10 @@
        data-bs-toggle="modal" data-bs-target="#addUserModal">Add</a>
   </div>
 
+  <div class="custom--display-name__container">
+    <p>{{displayName}}</p>
+  </div>
+
   <!-- List Users table-->
   <div class="custom--loader__container">
     <img *ngIf="loadingHandler.isLoading$ | async" src="assets/img/loader3.gif" alt="loading">

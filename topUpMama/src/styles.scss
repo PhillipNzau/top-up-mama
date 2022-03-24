@@ -141,3 +141,11 @@ textarea:focus, input:focus, button:focus { outline: none !important; box-shadow
     height: 30rem;
   }
 }
+
+.custom--display-name__container {
+  margin-top: 1rem;
+  p {
+    font-family: "topMamaBold", sans-serif;
+    font-size: 1.5rem;
+  }
+}

@@ -14,6 +14,15 @@ export class MyAccountPageComponent implements OnInit {
   // loading
   loadingHandler = new LoadingHandler();
 
+  // Location
+  lat: any
+  lng: any
+  displayName:any
+  city:any
+  suburb:any
+  region:any
+  country:any
+
   userId: any
   loggedInUser: any
   avatar:any
@@ -39,6 +48,18 @@ export class MyAccountPageComponent implements OnInit {
   ngOnInit(): void {
     this.userId = this.getToken()
     this.fetLoggedInUser()
+    this.getSavedUserLatLocation()
+    this.getSavedUserLngLocation()
+    this.getUserLocation()
+  }
+
+  // get location from local storage
+  getSavedUserLatLocation(): any {
+    this.lat = this.storage.getItem('lat')
+  }
+
+  getSavedUserLngLocation(): any {
+    this.lng = this.storage.getItem('lng')
   }
 
   fetLoggedInUser() {
@@ -81,6 +102,23 @@ export class MyAccountPageComponent implements OnInit {
       },
       error: (err:any)=>{
         this.notifyService.showError("Mmh.. Something went wrong.", "TopUpMama")
+      }
+    })
+  }
+
+  // Get user location
+  getUserLocation() {
+    this.userService.getUserLocation(this.lat, this.lng, 'json').subscribe({
+      next: (position: any) => {
+        this.city = position.address.city
+        this.country = position.address.country
+        this.region = position.address.region
+        this.suburb = position.address.suburb
+
+        this.displayName = `You Are Currently in: ${this.suburb} , ${this.city} -- ${this.country}`
+      },
+      error: (err: any) => {
+
       }
     })
   }

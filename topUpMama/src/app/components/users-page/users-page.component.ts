@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {UsersService} from "../../_services/users/users.service";
 import {FormBuilder, Validators} from "@angular/forms";
 import {NotificationService} from "../../_services/notifications/notification.service";
 import {LoadingHandler} from "../../_helpers/loading-handler";
+import {BROWSER_STORAGE} from "../../_helpers/storage";
 
 @Component({
   selector: 'app-users-page',
@@ -12,6 +13,16 @@ import {LoadingHandler} from "../../_helpers/loading-handler";
 export class UsersPageComponent implements OnInit {
   // loading
   loadingHandler = new LoadingHandler();
+
+  // Location
+  lat: any
+  lng: any
+  displayName:any
+  city:any
+  suburb:any
+  region:any
+  country:any
+
 
   allListedUsers: any
   selectedUserId: any
@@ -29,32 +40,46 @@ export class UsersPageComponent implements OnInit {
 
   // Res msg
   errorMessage = '';
-  successMsg= ''
+  successMsg = ''
 
   userName = '';
   jobTitle = '';
 
   //Create user form
   addUserForm = this.fb.group({
-    name:['', [Validators.required]],
-    job:['', [Validators.required]]
+    name: ['', [Validators.required]],
+    job: ['', [Validators.required]]
   })
 
   // Update user form
   updateUserForm = this.fb.group({
-    name:['',[Validators.required]],
-    job:['', [Validators.required]]
+    name: ['', [Validators.required]],
+    job: ['', [Validators.required]]
   })
 
   constructor(
     private fb: FormBuilder,
     private userService: UsersService,
     private notifyService: NotificationService,
-    ) {
+    @Inject(BROWSER_STORAGE) public storage: Storage
+  ) {
   }
 
   ngOnInit(): void {
     this.fetchAllUser(1, this.defaultPerPage)
+    this.getSavedUserLatLocation()
+    this.getSavedUserLngLocation()
+    this.getUserLocation()
+
+  }
+
+  // get location from local storage
+  getSavedUserLatLocation(): any {
+    this.lat = this.storage.getItem('lat')
+  }
+
+  getSavedUserLngLocation(): any {
+    this.lng = this.storage.getItem('lng')
   }
 
   // List all users
@@ -114,11 +139,11 @@ export class UsersPageComponent implements OnInit {
   }
 
   // List selected user details
-  selectedUser(id:number) {
+  selectedUser(id: number) {
     this.loadingHandler.start();
 
     this.userService.viewUser(id).subscribe({
-      next: (listSelectedUser:any) => {
+      next: (listSelectedUser: any) => {
         this.loadingHandler.finish();
 
         this.selectedUserId = id
@@ -134,14 +159,14 @@ export class UsersPageComponent implements OnInit {
         };
         this.updateUserForm.setValue(fetchedUser);
       },
-      error: (err:any) =>{
+      error: (err: any) => {
         console.log('List selected user error: ', err)
       }
     })
   }
 
   // Delete user by ID
-  deleteUserId(id:number) {
+  deleteUserId(id: number) {
     this.loadingHandler.start();
 
     this.userService.deleteUser(id).subscribe({
@@ -151,7 +176,7 @@ export class UsersPageComponent implements OnInit {
 
         console.log('Deleted user success: ', deleteUser)
       },
-      error: (err: any)=>{
+      error: (err: any) => {
         this.loadingHandler.finish();
         this.notifyService.showError("Mmh.. Something went wrong deleting user.", "TopUpMama")
 
@@ -164,17 +189,34 @@ export class UsersPageComponent implements OnInit {
   updateSelectedUser() {
     this.loadingHandler.start();
 
-    this.userService.updateUser(this.updateUserForm.value,this.selectedUserId).subscribe({
-      next: (updatedUserDetails:any) =>{
+    this.userService.updateUser(this.updateUserForm.value, this.selectedUserId).subscribe({
+      next: (updatedUserDetails: any) => {
         this.loadingHandler.finish();
         this.notifyService.showSuccess("Users updated successfully", "TopUpMama")
 
         console.log('Updated User details success: ', updatedUserDetails)
       },
-      error: (err:any) => {
+      error: (err: any) => {
         this.notifyService.showError("Mmh.. Something went wrong updating user.", "TopUpMama")
 
-        console.log('Updated User details error: ' , err)
+        console.log('Updated User details error: ', err)
+      }
+    })
+  }
+
+  // Get user location
+  getUserLocation() {
+    this.userService.getUserLocation(this.lat, this.lng, 'json').subscribe({
+      next: (position: any) => {
+        this.city = position.address.city
+        this.country = position.address.country
+        this.region = position.address.region
+        this.suburb = position.address.suburb
+
+        this.displayName = `You Are Currently in: ${this.suburb} , ${this.city} -- ${this.country}`
+      },
+      error: (err: any) => {
+
       }
     })
   }

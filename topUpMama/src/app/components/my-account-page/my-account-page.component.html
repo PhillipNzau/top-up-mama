@@ -15,7 +15,7 @@
 
     <div class="col-sm-12 col-md-6 col-lg-6 d-flex justify-content-center align-items-center mb-5">
       <div [ngClass]="{'hide': loadingHandler.isLoading$ | async}">
-        <p>User currently at: </p>
+        <p>{{displayName}}</p>
 
         <form action="" class="row entry-container" [formGroup]="updateLoggedUserForm" (ngSubmit)="updateLoggedUserSubmit()">
           <div class="col-12 mb-3">
