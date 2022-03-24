@@ -47,7 +47,7 @@ textarea:focus, input:focus, button:focus { outline: none !important; box-shadow
 }
 // Shared login and register css
 .entry-section {
-  background-image: url("~src/assets/img/backgroundImg.jpg");
+  background-image: url("~src/assets/img/veggie-market-min.jpg");
   background-size: cover;
   background-position: top;
   position: relative;
@@ -137,7 +137,22 @@ textarea:focus, input:focus, button:focus { outline: none !important; box-shadow
   justify-content: center;
   align-items: center;
   img {
-    width: 50rem;
-    height: 50rem;
+    width: 30rem;
+    height: 30rem;
   }
+}
+
+.custom--display-name__container {
+  margin-top: 1rem;
+  p {
+    font-family: "topMamaBold", sans-serif;
+    font-size: 4vw;
+  }
+}
+
+.custom--map__container {
+  width: 100%;
+  height: 15rem;
+  background-color: #220e08;
+  margin-bottom: 1rem;
 }

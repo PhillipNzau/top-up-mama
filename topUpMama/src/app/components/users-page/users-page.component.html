@@ -5,6 +5,10 @@
        data-bs-toggle="modal" data-bs-target="#addUserModal">Add</a>
   </div>
 
+  <div class="custom--display-name__container">
+    <p>{{displayName}}</p>
+  </div>
+
   <!-- List Users table-->
   <div class="custom--loader__container">
     <img *ngIf="loadingHandler.isLoading$ | async" src="assets/img/loader3.gif" alt="loading">
@@ -65,7 +69,12 @@
         </ul>
       </nav>
     </div>
+
+    <div class="custom--map__container">
+      <app-map></app-map>
+    </div>
   </div>
+
 </section>
 
 
@@ -152,7 +161,9 @@
           </div>
 
           <div class="col-12 mb-3 d-flex justify-content-between align-items-center">
-            <button type="submit" class="btn custom--add__button custom--add__button--add" [disabled]="!updateUserForm.valid"> Update User</button>
+            <button type="submit" class="btn custom--add__button custom--add__button--add"
+                    [disabled]="!updateUserForm.valid"> Update User
+            </button>
             <a class="btn custom--add__button custom--add__button--close" data-bs-dismiss="modal">
               Close
             </a>

@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
+import {AuthService} from "../../../_services/auth/auth.service";
+import {NotificationService} from "../../../_services/notifications/notification.service";
+import {LoadingHandler} from "../../../_helpers/loading-handler";
 
 @Component({
   selector: 'app-login',
@@ -7,6 +10,9 @@ import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  // loading
+  loadingHandler = new LoadingHandler();
+
   isShowPassword = false;
   submitted = false;
   // Create the login form
@@ -16,7 +22,8 @@ export class LoginComponent implements OnInit {
   });
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private loginService: AuthService,
   ) {
   }
 
@@ -32,7 +39,18 @@ export class LoginComponent implements OnInit {
   }
 
   loginUserSubmit() {
-    this.submitted = true;
+    this.loadingHandler.start();
+
+    this.loginService.login(this.loginForm.value).subscribe({
+      next: (loginRes:any) =>{
+        this.loadingHandler.finish();
+        // console.log('Login res success: ',loginRes)
+      },
+      error: (err:any) =>{
+        console.log('Login res: ',err)
+      }
+    })
+
   }
 
   // check form validity
