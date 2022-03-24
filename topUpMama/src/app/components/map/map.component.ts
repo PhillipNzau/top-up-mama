@@ -1,6 +1,16 @@
 import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 // @ts-ignore
 import * as L from 'leaflet';
+import {
+  FeatureGroup,
+  latLng,
+  map,
+  tileLayer,
+  marker,
+  icon,
+  popup,
+} from 'leaflet';
+
 import {LocationService} from "../../_services/location/location.service";
 import {UsersService} from "../../_services/users/users.service";
 import {BROWSER_STORAGE} from "../../_helpers/storage";
@@ -17,6 +27,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   lat: any
   lng: any
 
+
   private initMap(): void {
     this.map = L.map('map', {
       center: [this.lat, this.lng],
@@ -29,7 +40,12 @@ export class MapComponent implements OnInit, AfterViewInit {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
 
-    L.marker([this.lat, this.lng]).addTo(this.map);
+    const myIcon = L.icon({
+      iconUrl: 'assets/img/mapIcon.png',
+      iconSize: [17, 30]
+
+    })
+    L.marker([this.lat, this.lng],  {icon: myIcon}).addTo(this.map);
     tiles.addTo(this.map);
   }
 
