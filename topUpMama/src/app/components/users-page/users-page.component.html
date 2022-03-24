@@ -126,7 +126,7 @@
       </div>
 
       <div class="modal-body " [ngClass]="{'hide': loadingHandler.isLoading$ | async}">
-        <form action="" class="row " [formGroup]="updateUserForm">
+        <form action="" class="row " [formGroup]="updateUserForm" (ngSubmit)="updateSelectedUser()">
           <div class="col-12 mb-3">
             <label for="editUserName" class="form-label">User Name</label>
             <input [ngClass]="{'is-invalid': isValid('name',updateUserForm)}"
@@ -157,7 +157,6 @@
               Close
             </a>
           </div>
-
         </form>
       </div>
     </div>

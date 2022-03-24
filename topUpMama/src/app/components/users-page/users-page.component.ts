@@ -14,6 +14,9 @@ export class UsersPageComponent implements OnInit {
   loadingHandler = new LoadingHandler();
 
   allListedUsers: any
+  selectedUserId: any
+
+  // Pagination vars
   itemsPerPage: any;
   currentPage: any;
   nextPage: any;
@@ -23,6 +26,8 @@ export class UsersPageComponent implements OnInit {
   defaultPerPage = 6
   pageNumbers: any;
   itemsListNumber: number[] = [];
+
+  // Res msg
   errorMessage = '';
   successMsg= ''
 
@@ -93,17 +98,17 @@ export class UsersPageComponent implements OnInit {
   addUserSubmit() {
     this.loadingHandler.start();
     this.userService.createUser(this.addUserForm.value).subscribe({
-      next: (data: any) => {
+      next: (addUser: any) => {
         this.loadingHandler.finish();
         this.notifyService.showSuccess("Users created successfully", "TopUpMama")
         this.addUserForm.reset()
-        console.log(data)
+
+        console.log('Add user success: ', addUser)
       },
       error: (err: { error: { error: string; }; }) => {
         this.notifyService.showError("Mmh.. Something went wrong creating user.", "TopUpMama")
 
-        // this.errorMessage = err.error.error
-        console.log(err)
+        console.log('Add user error: ', err)
       }
     })
   }
@@ -113,13 +118,14 @@ export class UsersPageComponent implements OnInit {
     this.loadingHandler.start();
 
     this.userService.viewUser(id).subscribe({
-      next: (data:any) => {
+      next: (listSelectedUser:any) => {
         this.loadingHandler.finish();
 
-        console.log(data.data.first_name)
-        this.userName = data.data.first_name
-        this.jobTitle = data.data.last_name
-        console.log(this.jobTitle)
+        this.selectedUserId = id
+        this.userName = listSelectedUser.data.first_name
+        this.jobTitle = listSelectedUser.data.last_name
+
+        console.log('List selected user success: ', listSelectedUser)
 
         // set fetched user form details
         let fetchedUser = {
@@ -127,10 +133,9 @@ export class UsersPageComponent implements OnInit {
           job: this.jobTitle,
         };
         this.updateUserForm.setValue(fetchedUser);
-        console.log('The form ', this.updateUserForm.value)
       },
       error: (err:any) =>{
-
+        console.log('List selected user error: ', err)
       }
     })
   }
@@ -140,13 +145,36 @@ export class UsersPageComponent implements OnInit {
     this.loadingHandler.start();
 
     this.userService.deleteUser(id).subscribe({
-      next: (data: any) => {
+      next: (deleteUser: any) => {
         this.loadingHandler.finish();
         this.notifyService.showSuccess("Users deleted successfully", "TopUpMama")
+
+        console.log('Deleted user success: ', deleteUser)
       },
       error: (err: any)=>{
         this.loadingHandler.finish();
         this.notifyService.showError("Mmh.. Something went wrong deleting user.", "TopUpMama")
+
+        console.log('Deleted user error:', err)
+      }
+    })
+  }
+
+  // Update user details
+  updateSelectedUser() {
+    this.loadingHandler.start();
+
+    this.userService.updateUser(this.updateUserForm.value,this.selectedUserId).subscribe({
+      next: (updatedUserDetails:any) =>{
+        this.loadingHandler.finish();
+        this.notifyService.showSuccess("Users updated successfully", "TopUpMama")
+
+        console.log('Updated User details success: ', updatedUserDetails)
+      },
+      error: (err:any) => {
+        this.notifyService.showError("Mmh.. Something went wrong updating user.", "TopUpMama")
+
+        console.log('Updated User details error: ' , err)
       }
     })
   }

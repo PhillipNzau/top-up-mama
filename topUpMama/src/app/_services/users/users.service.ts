@@ -46,6 +46,10 @@ export class UsersService {
     return this.http.get(this.userUpdateUrl + id, this.getHeaders())
   }
 
+  updateUser(userdata:any, id:number):any {
+    return this.http.patch(this.userUpdateUrl + id, userdata, this.getHeaders())
+  }
+
 
 
 
