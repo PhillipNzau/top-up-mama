@@ -84,7 +84,7 @@ export class MyAccountPageComponent implements OnInit {
         console.log('Fetched Logged user success: ', loggedUser)
       },
       error: (err:any)=>{
-        this.notifyService.showError("Mmh.. Something went wrong.", "TopUpMama")
+        this.notifyService.showError("Mmh.. Seems no user ID found.", "TopUpMama")
 
         console.log('Fetched Logged user err: ', err)
       }
