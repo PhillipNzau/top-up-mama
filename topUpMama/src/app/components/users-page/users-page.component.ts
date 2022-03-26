@@ -57,6 +57,10 @@ export class UsersPageComponent implements OnInit {
     job: ['', [Validators.required]]
   })
 
+  saveExpTime(time:string):any {
+    return this.storage.setItem('tokenExp', time)
+  }
+
   constructor(
     private fb: FormBuilder,
     private userService: UsersService,
@@ -70,6 +74,7 @@ export class UsersPageComponent implements OnInit {
     this.getSavedUserLatLocation()
     this.getSavedUserLngLocation()
     this.getUserLocation()
+    // this.saveExpTime(String(new Date().getTime() + 600000))
 
   }
 

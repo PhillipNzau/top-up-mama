@@ -82,7 +82,7 @@ export class AuthService {
       tap(),
       map((res:any)=> {
         this.notifyService.showSuccess("Users logged in successfully.", "TopUpMama")
-        this.saveExpTime('600000')
+        this.saveExpTime(String(new Date().getTime() + 600000))
         this.loggedIn.next(true);
         this.router.navigate(['/']).then(r => {});
         const resLength = Object.keys(res).length
