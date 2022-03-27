@@ -108,7 +108,7 @@ export class AuthService {
           this.saveIsLoggedIn('true')
 
           // Set a dummy id:: api does not provide uid on login
-          this.saveUserId('2')
+          // this.saveUserId('2')
         }
       }),
     catchError(async () => {
