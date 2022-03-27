@@ -35,6 +35,7 @@ export class UsersPageComponent implements OnInit {
   totalPages: any;
   lastPage: any;
   defaultPerPage = 6
+  totalData: number[] = [4,8,12]
   pageNumbers: any;
   itemsListNumber: number[] = [];
 
@@ -233,5 +234,10 @@ export class UsersPageComponent implements OnInit {
       (formName.controls[fieldName].dirty ||
         formName.controls[fieldName].touched)
     );
+  }
+
+  toFilter(show: any) {
+    this.defaultPerPage = show
+    this.fetchAllUser(1, show)
   }
 }
