@@ -15,6 +15,7 @@ import {ErrorCatchingInterceptor} from "./_helpers/interceptors/error-catching.i
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import { MapComponent } from './components/map/map.component';
+import { TimerComponent } from './components/timer/timer.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MapComponent } from './components/map/map.component';
     UsersPageComponent,
     MyAccountPageComponent,
     NavBarComponent,
-    MapComponent
+    MapComponent,
+    TimerComponent
   ],
   imports: [
     BrowserModule,

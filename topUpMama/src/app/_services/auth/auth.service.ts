@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {environment} from "../../../environments/environment";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, catchError, map, Observable, tap} from "rxjs";
 import {BROWSER_STORAGE} from "../../_helpers/storage";
 import {NotificationService} from "../notifications/notification.service";
@@ -11,19 +11,20 @@ import {Router} from "@angular/router";
   providedIn: 'root'
 })
 export class AuthService {
+
   private loggedIn = new BehaviorSubject<boolean>(localStorage.getItem("isLoggedIn") === "true");
+
   get isLoggedIn() {
     return this.loggedIn.asObservable();
   }
+
   // locations
   lat:any
   lng:any
+
   // Login register Url
   loginUserUrl = environment.loginUser
   registerUserUrl = environment.registerUser
-
-  // Location service url
-  locationUrl = environment.userLocation
 
   constructor(
     private http: HttpClient,
@@ -32,6 +33,7 @@ export class AuthService {
     private router: Router,
     @Inject(BROWSER_STORAGE) public storage: Storage) { }
 
+  // Save data to local storage
   saveToken(token: string): any {
     return this.storage.setItem('access_token', token);
   }
@@ -40,13 +42,13 @@ export class AuthService {
     return this.storage.getItem('access_token');
   }
 
-  saveRefreshToken(token: string): any {
-    return this.storage.setItem('tum_refresh_token', token);
-  }
+  // saveRefreshToken(token: string): any {
+  //   return this.storage.setItem('tum_refresh_token', token);
+  // }
 
-  getRefreshToken(): any {
-    return this.storage.getItem('tum_refresh_token');
-  }
+  // getRefreshToken(): any {
+  //   return this.storage.getItem('tum_refresh_token');
+  // }
 
   saveUserId(id: string):any {
     return this.storage.setItem('uid', id)
@@ -68,10 +70,6 @@ export class AuthService {
     return this.storage.setItem('tokenExp', time)
   }
 
-  getExpTime():any {
-    return this.storage.getItem('tokenExp')
-  }
-
   removeSetStorage(): any {
     return this.storage.clear();
   }
@@ -82,12 +80,17 @@ export class AuthService {
       tap(),
       map((res:any)=> {
         this.notifyService.showSuccess("Users logged in successfully.", "TopUpMama")
-        this.saveExpTime('600000')
-        this.loggedIn.next(true);
-        this.router.navigate(['/']).then(r => {});
-        const resLength = Object.keys(res).length
 
-        //Get and save location
+        // provide a dummy token expiry date
+        this.saveExpTime(String(new Date().getTime() + 600000))
+
+        // Change the logged in status
+        this.loggedIn.next(true);
+
+        // Redirect to landing page on success login
+        this.router.navigate(['/']).then(() => {});
+
+        //Get and save logged-in user location
         this.locationService.getPosition().then(pos=>
         {
           this.lat = pos.lat
@@ -97,13 +100,18 @@ export class AuthService {
           this.saveUserLngLocation(this.lng)
         });
 
+        // Get the length of the response from api::
+        const resLength = Object.keys(res).length
+
         if(resLength > 0) {
           this.saveToken(res.token)
           this.saveIsLoggedIn('true')
-          // this.saveUserId(res.id)
+
+          // Set a dummy id:: api does not provide uid on login
+          // this.saveUserId('2')
         }
       }),
-    catchError(async (error) => {
+    catchError(async () => {
       this.notifyService.showError("Mmh.. Something went wrong logging in.", "TopUpMama")
       console.log('errors');
       // this.loginServerError = error.error.error;
@@ -118,9 +126,8 @@ export class AuthService {
       map((res:any)=> {
         this.notifyService.showSuccess("Users registered successfully.", "TopUpMama")
         this.loggedIn.next(true);
-        this.router.navigate(['/']).then(r => { });
+        this.router.navigate(['/']).then(() => { });
 
-        const resLength = Object.keys(res).length
         //Get and save location
         this.locationService.getPosition().then(pos=>
         {
@@ -130,6 +137,8 @@ export class AuthService {
           this.saveUserLatLocation(this.lat)
           this.saveUserLngLocation(this.lng)
         });
+
+        const resLength = Object.keys(res).length
 
         if(resLength > 0) {
           this.saveToken(res.token)
@@ -146,9 +155,15 @@ export class AuthService {
     );
   }
 
+  // Log out user
   logout() {
+    // Change logged in status
     this.loggedIn.next(false);
+
+    // Clear saved data on local storage
     this. removeSetStorage()
-    this.router.navigate(['/login']).then(r => {});
+
+    // Redirect back to login-register page
+    this.router.navigate(['/login']).then(() => {});
   }
 }

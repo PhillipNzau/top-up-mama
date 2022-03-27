@@ -35,6 +35,7 @@ export class UsersPageComponent implements OnInit {
   totalPages: any;
   lastPage: any;
   defaultPerPage = 6
+  totalData: number[] = [4,8,12]
   pageNumbers: any;
   itemsListNumber: number[] = [];
 
@@ -57,6 +58,10 @@ export class UsersPageComponent implements OnInit {
     job: ['', [Validators.required]]
   })
 
+  saveExpTime(time:string):any {
+    return this.storage.setItem('tokenExp', time)
+  }
+
   constructor(
     private fb: FormBuilder,
     private userService: UsersService,
@@ -70,7 +75,6 @@ export class UsersPageComponent implements OnInit {
     this.getSavedUserLatLocation()
     this.getSavedUserLngLocation()
     this.getUserLocation()
-
   }
 
   // get location from local storage
@@ -114,9 +118,17 @@ export class UsersPageComponent implements OnInit {
     this.fetchAllUser(this.prevPage, this.defaultPerPage)
   }
 
+  // Navigate to next table page
   toNextPage() {
     this.nextPage = this.currentPage + 1
     this.fetchAllUser(this.nextPage, this.defaultPerPage)
+  }
+
+
+  // Filter data to display on table
+  toFilter(show: any) {
+    this.defaultPerPage = show
+    this.fetchAllUser(1, show)
   }
 
   // Create user function
@@ -229,4 +241,5 @@ export class UsersPageComponent implements OnInit {
         formName.controls[fieldName].touched)
     );
   }
+
 }
