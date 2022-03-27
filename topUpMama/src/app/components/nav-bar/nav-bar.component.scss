@@ -6,11 +6,6 @@
   padding: 3rem 2rem 3rem 2rem;
   margin-bottom: 1rem;
 
-  //Large screens - DESKTOP
-  //@media only screen and (min-width: 64.063em) {
-  //  padding-left: 30rem  ;
-  //  padding-right: 30rem  ;
-  //}
 }
 .navbar__logo__container {
   cursor: pointer;
@@ -19,6 +14,11 @@
     width: 5rem;
   }
 }
+
+.custom--timer__container{
+  margin-top: 1rem;
+}
+
 .navbar__menu-items__container {
   display: flex;
   align-items: center;

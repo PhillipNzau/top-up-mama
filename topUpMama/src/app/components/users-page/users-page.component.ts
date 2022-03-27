@@ -75,8 +75,6 @@ export class UsersPageComponent implements OnInit {
     this.getSavedUserLatLocation()
     this.getSavedUserLngLocation()
     this.getUserLocation()
-    // this.saveExpTime(String(new Date().getTime() + 600000))
-
   }
 
   // get location from local storage
@@ -120,9 +118,17 @@ export class UsersPageComponent implements OnInit {
     this.fetchAllUser(this.prevPage, this.defaultPerPage)
   }
 
+  // Navigate to next table page
   toNextPage() {
     this.nextPage = this.currentPage + 1
     this.fetchAllUser(this.nextPage, this.defaultPerPage)
+  }
+
+
+  // Filter data to display on table
+  toFilter(show: any) {
+    this.defaultPerPage = show
+    this.fetchAllUser(1, show)
   }
 
   // Create user function
@@ -236,8 +242,4 @@ export class UsersPageComponent implements OnInit {
     );
   }
 
-  toFilter(show: any) {
-    this.defaultPerPage = show
-    this.fetchAllUser(1, show)
-  }
 }
